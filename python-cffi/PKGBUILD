@@ -25,7 +25,7 @@ sha256sums=('d99690c6fe2efa7b60d0abb3ea6f30fd544d15ee01909328ea2d1991939d4162'
 
 prepare() {
   cd "${srcdir}"
-  rm -rf "python-build-${CARCH}"
+  rm -rf "python-build-${CARCH}" | true
   cp -r "${_realname}-v${pkgver}" "python-build-${CARCH}"
   cd "python-build-${CARCH}"
   patch -Np1 -i "${srcdir}"/mingw-non-x86.patch
