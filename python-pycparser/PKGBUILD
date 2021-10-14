@@ -1,0 +1,44 @@
+# converted with mingw-to-msys from MINGW-packages/mingw-w64-python-pycparser/PKGBUILD https://github.com/msys2/MINGW-packages/blob/2475e24a310fa950e66ad6c1a1c5667a7c0103b9/mingw-w64-python-pycparser/PKGBUILD
+# Contributor: Frederic Wang <fred.wang@free.fr>
+
+_realname=pycparser
+pkgbase=python-${_realname}
+pkgname=("python-${_realname}")
+provides=("python3-${_realname}")
+conflicts=("python3-${_realname}")
+replaces=("python3-${_realname}")
+pkgver=2.20
+pkgrel=1
+pkgdesc='Complete parser of the C language, written in pure Python (mingw-w64)'
+arch=('i686' 'x86_64')
+url='https://github.com/eliben/pycparser'
+license=('BSD')
+depends=("python"
+         "python-ply")
+makedepends=("python-setuptools")
+#_dtoken="be/64/1bb257ffb17d01f4a38d7ce686809a736837ad4371bcc5c42ba7a715c3ac"
+source=("${_realname}-${pkgver}.tar.gz::https://github.com/eliben/pycparser/archive/release_v${pkgver}.tar.gz")
+sha256sums=('1b895b4f6fb5195ce9c516ca7e28c9bd2f9ecd0f02755302b8a717454abea806')
+
+prepare() {
+  cd "${srcdir}"
+  rm -rf python-build-${CARCH} | true
+  cp -r "${_realname}-release_v${pkgver}" "python-build-${CARCH}"
+}
+
+build() {
+  msg "Python build for ${CARCH}"
+  cd "${srcdir}/python-build-${CARCH}"
+  /usr/bin/python setup.py build
+  cd pycparser
+  /usr/bin/python _build_tables.py
+}
+
+package() {
+  cd "${srcdir}/python-build-${CARCH}"
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+  /usr/bin/python setup.py install \
+    --root="${pkgdir}" --optimize=1 --skip-build
+  
+  install -Dm644 LICENSE "${pkgdir}/share/licenses/python-${_realname}/LICENSE"
+}

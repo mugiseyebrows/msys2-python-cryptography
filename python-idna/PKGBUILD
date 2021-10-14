@@ -1,0 +1,47 @@
+# converted with mingw-to-msys from MINGW-packages/mingw-w64-python-idna/PKGBUILD https://github.com/msys2/MINGW-packages/blob/2475e24a310fa950e66ad6c1a1c5667a7c0103b9/mingw-w64-python-idna/PKGBUILD
+# Maintainer: Frederic Wang <fred.wang@free.fr>
+
+_realname=idna
+pkgbase=python-${_realname}
+pkgname=("python-${_realname}")
+provides=("python3-${_realname}")
+conflicts=("python3-${_realname}")
+replaces=("python3-${_realname}")
+pkgver=3.2
+pkgrel=1
+pkgdesc='Internationalized Domain Names in Applications (mingw-w64)'
+url='https://github.com/kjd/idna'
+license=('BSD-like')
+arch=('i686' 'x86_64')
+depends=("python")
+makedepends=("python-setuptools")
+_dtoken="d8/82/28a51052215014efc07feac7330ed758702fc0581347098a81699b5281cb"
+source=("https://pypi.io/packages/source/${_realname::1}/${_realname}/${_realname}-${pkgver}.tar.gz")
+sha256sums=('467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3')
+
+prepare() {
+  cd ${srcdir}
+  rm -rf python-build-${CARCH}
+  cp -r ${_realname}-${pkgver} python-build-${CARCH}
+}
+
+build() {
+  msg "Python build for ${CARCH}"
+  cd "${srcdir}/python-build-${CARCH}"
+  /usr/bin/python setup.py build
+}
+
+check() {
+  msg "Python test for ${CARCH}"  
+  cd "${srcdir}/python-build-${CARCH}"
+  /usr/bin/python setup.py test
+}
+
+package() {
+  cd "${srcdir}/python-build-${CARCH}"
+
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+    /usr/bin/python setup.py install --root="${pkgdir}"  --optimize=1 --skip-build
+
+  install -Dm644 "${srcdir}/${_realname}-${pkgver}/LICENSE.md" "${pkgdir}/share/licenses/python-${_realname}/LICENSE"
+}

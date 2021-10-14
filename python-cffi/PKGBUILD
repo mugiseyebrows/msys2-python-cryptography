@@ -1,0 +1,45 @@
+# converted with mingw-to-msys from MINGW-packages/mingw-w64-python-cffi/PKGBUILD https://github.com/msys2/MINGW-packages/blob/2475e24a310fa950e66ad6c1a1c5667a7c0103b9/mingw-w64-python-cffi/PKGBUILD
+# Maintainer: Alexey Pavlov <alexpux@gmail.com>
+
+_realname=cffi
+pkgbase=python-${_realname}
+pkgname=("python-${_realname}")
+provides=("python3-${_realname}")
+conflicts=("python3-${_realname}")
+replaces=("python3-${_realname}")
+pkgver=1.14.5
+pkgrel=1
+pkgdesc="Foreign Function Interface for Python calling C code (mingw-w64)"
+url='https://cffi.readthedocs.io/'
+license=('MIT')
+arch=('i686' 'x86_64')
+depends=("libffi-devel"
+         "python-pycparser")
+makedepends=("python-setuptools")
+checkdepends=("python-pytest-runner")
+source=("https://foss.heptapod.net/pypy/cffi/-/archive/v${pkgver}/${_realname}-v${pkgver}.tar.bz2"
+        "mingw-non-x86.patch")
+sha256sums=('d99690c6fe2efa7b60d0abb3ea6f30fd544d15ee01909328ea2d1991939d4162'
+            'c8a8ea2d65932ea0b62eae56dbc8afd6baacaadc7cb284ca0e4edf7ed1460c52')
+
+prepare() {
+  cd "${srcdir}"
+  rm -rf "python-build-${CARCH}"
+  cp -r "${_realname}-v${pkgver}" "python-build-${CARCH}"
+  cd "python-build-${CARCH}"
+  patch -Np1 -i "${srcdir}"/mingw-non-x86.patch
+}
+
+build() {
+  cd "${srcdir}/python-build-${CARCH}"
+  /usr/bin/python setup.py build
+}
+
+package() {
+  cd "${srcdir}/python-build-${CARCH}"
+
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+  /usr/bin/python setup.py install --root="${pkgdir}" --skip-build
+
+  install -D -m644 LICENSE "${pkgdir}"/share/licenses/python-${_realname}/LICENSE
+}
