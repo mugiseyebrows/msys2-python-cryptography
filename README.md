@@ -19,4 +19,4 @@ Build and install packages
 sh build-and-install.sh
 ```
 
-![Build Status](https://ci.appveyor.com/api/projects/status/github/mugiseyebrows/msys2-python-cryptography)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/mugiseyebrows/msys2-python-cryptography)](https://ci.appveyor.com/project/mugiseyebrows/msys2-python-cryptography)
