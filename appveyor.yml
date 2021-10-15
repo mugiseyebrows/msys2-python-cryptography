@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 
 build_script: |
   C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
@@ -17,5 +17,5 @@ deploy:
   auth_token:
     secure: jBN4dQaXdrv9SsDZGZXuGQJ9LlP+jPRXFq++Sbt+qo1dTFGiTIGemBMEazWuPAxc
   on:
-    branch: master
+    branch: main
     APPVEYOR_REPO_TAG: true
