@@ -1,1 +1,0 @@
-pacman -S --noconfirm python python-setuptools binutils patch gcc
