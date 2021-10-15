@@ -1,0 +1,10 @@
+digraph G {
+  node [shape=rect]
+  "python-cryptography" -> "python-cffi";
+  "python-cryptography" -> "python-idna";
+  "python-cryptography" -> "openssl-devel";
+  "python-cffi" -> "python-pycparser";
+  "python-cffi" -> "libffi-devel";
+  "python-cffi" -> "libcrypt-devel";
+  "python-pycparser" -> "python-ply";
+}
