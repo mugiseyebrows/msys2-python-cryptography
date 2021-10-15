@@ -1,7 +1,6 @@
-version: 0.0.1
+version: 0.0.2
 
 build_script: |
-  # Update MSYS2
   C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
   C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
   set CHERE_INVOKING='yes'
