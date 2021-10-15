@@ -1,4 +1,4 @@
-version: 0.0.18
+version: 0.0.19
 
 branches:
   only:
@@ -20,5 +20,3 @@ deploy:
   provider: GitHub
   auth_token:
     secure: jBN4dQaXdrv9SsDZGZXuGQJ9LlP+jPRXFq++Sbt+qo1dTFGiTIGemBMEazWuPAxc
-  on:
-    APPVEYOR_REPO_TAG: true
