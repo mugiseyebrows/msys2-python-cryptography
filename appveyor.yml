@@ -1,8 +1,4 @@
-version: 0.0.22
-
-branches:
-  only:
-    - main
+version: 0.0.23
 
 build_script: |
   C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
