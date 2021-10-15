@@ -1,0 +1,21 @@
+version: 0.0.1
+
+build_script: |
+  # Update MSYS2
+  C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
+  C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
+  set CHERE_INVOKING='yes'
+  set MSYSTEM='MSYS'  
+  C:\msys64\usr\bin\bash -lc "./build-and-install.sh"
+
+artifacts:
+  - path: '**\*.zst'
+    name: packages
+
+deploy:
+  description: 'msys2-python-cryptography'
+  provider: GitHub
+  auth_token:
+    secure: jBN4dQaXdrv9SsDZGZXuGQJ9LlP+jPRXFq++Sbt+qo1dTFGiTIGemBMEazWuPAxc
+  on:
+    branch: master
