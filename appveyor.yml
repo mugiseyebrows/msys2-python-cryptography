@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 
 build_script: |
   C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
